@@ -1,0 +1,44 @@
+@import "../../custom-theme.scss";
+.index {
+  width: 100%;
+  display: block;
+  text-align: center;
+  .gopher {
+    width: 100%;
+    height: 300rpx;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    -webkit-box-reflect: below 2rpx -webkit-gradient(linear, right top, right bottom, from(transparent), color-stop(50%, transparent), to(rgba(255, 255, 255, 0.1)));
+  }
+
+  .link {
+    font-weight: 900;
+    font-size: 25rpx;
+    text-decoration: underline;
+    text-decoration-color: $color-brand-light;
+  }
+  .intro, .proj {
+    position: absolute;
+    top: 350rpx;
+    width: 100%;
+    padding: 2rem;
+    text-align: left;
+    .text {
+      text-align: unset;
+      font-weight: 300;
+      font-size: 1rem;
+      color: $color-brand;
+      text-indent: 2rem;
+    }
+  }
+
+  .proj {
+    text-align: center;
+    font-weight: 200;
+    top: unset;
+    bottom: 100rpx;
+    color: $color-brand;
+  }
+}

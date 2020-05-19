@@ -1,0 +1,17 @@
+@import "~taro-ui/dist/style/variables/default.scss";
+@import "./custom-theme.scss";
+@import "~taro-ui/dist/style/mixins/index.scss";
+@import "~taro-ui/dist/style/components/index.scss";
+
+// @import "./taro-ui.css";
+
+.page {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  min-height: 100vh;
+}
+
+view {
+  box-sizing: border-box;
+}

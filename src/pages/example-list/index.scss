@@ -1,0 +1,23 @@
+@import "../../custom-theme.scss";
+
+.index {
+  flex-direction: column;
+  width: 100%;
+  background: #efefef;
+  .at-list {
+    box-sizing: border-box;
+    padding: 5%;
+  }
+  .at-list__item {
+    font-size: 1.2rem;
+    color: $color-brand-light ;
+  }
+
+  .at-divider__line {
+    background-color: $color-brand-light;
+  }
+  .dl {
+    font-weight: 200;
+    margin-top: 2rem;
+  }
+}
