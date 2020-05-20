@@ -1,4 +1,4 @@
-# Go学习微信小程序
+# Go代码示例学习微信小程序
  
 - [English](README.md)
  
