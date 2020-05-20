@@ -142,7 +142,7 @@ class Index extends Component {
         </View>
         <AtFab className="btn-fab">
           <Button openType="share" className="btn-share">
-            <Text className="at-fab__icon at-icon at-icon-share"></Text>
+            <Text className="at-fab__icon at-icon at-icon-share" style={{color: "#fefefe"}}></Text>
           </Button>
         </AtFab>
       </View>

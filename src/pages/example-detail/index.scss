@@ -99,6 +99,9 @@
       align-items: center;
       background: transparent;
     }
+    .btn-share::after {
+      border: none;
+    }
   }
 
   /* chroma style */
