@@ -1,0 +1,20 @@
+@import "../../../custom-theme.scss";
+
+.index {
+  height: 100%;
+  width: 100%;
+  padding: 2rem;
+  label {
+    color: $color-brand;
+    margin-bottom: 15px;
+    font-weight: 200;
+    font-size: 32rpx;
+    display: block  ;
+  }
+  .btn-sub {
+    margin-top: 2rem;
+  }
+  .cot > .at-textarea__textarea {
+    height: 200px ;
+  }
+}

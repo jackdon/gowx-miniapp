@@ -59,7 +59,8 @@ class Index extends Component {
 
   handleGotoList = () => {
     Taro.navigateTo({
-      url: "/pages/example-list/index"
+      // url: "/pages/example-list/index"
+      url: "/pages/lesson/index"
     });
   };
 
@@ -90,6 +91,16 @@ class Index extends Component {
               }}
             >
               关于
+            </Text>
+            <Text
+              className="link"
+              onClick={() => {
+                Taro.navigateTo({
+                  url: `/pages/about/feedback/index`
+                });
+              }}
+            >
+              提交反馈
             </Text>
           </View>
         </View>

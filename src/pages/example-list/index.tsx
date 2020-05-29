@@ -6,6 +6,7 @@ import { AtList, AtListItem, AtDivider } from "taro-ui";
 import { connect } from "@tarojs/redux";
 import qs from "querystring";
 
+import Loading from "../components/Loading";
 import { fetchExampleList } from "../../actions/index";
 
 import "./index.scss";
@@ -81,8 +82,7 @@ class Index extends Component {
 
   componentWillUnmount() {}
 
-  componentDidShow() {
-  }
+  componentDidShow() {}
 
   componentDidHide() {}
 
@@ -101,15 +101,22 @@ class Index extends Component {
   };
 
   render() {
-    const { list, pagination } = this.props.pageIndex;
+    const { list, pagination, loading } = this.props.pageIndex;
     return (
       <View className="index">
+        {loading && <Loading loading={loading} loadingText="正在加载..." />}
         <AtList>
           {list.map((e, idx) => {
-            return <AtListItem onClick={this.handleOpenExampleDetail.bind(this, e)} key={`example_${idx}`} title={e.name} />;
+            return (
+              <AtListItem
+                onClick={this.handleOpenExampleDetail.bind(this, e)}
+                key={`example_${idx}`}
+                title={e.name}
+              />
+            );
           })}
           {pagination.next === 0 && (
-            <AtDivider className="dl" content="更多内容请持续关注～" />
+            <AtDivider className="dl" content={loading? "正在加载..." : "更多内容请持续关注～"} />
           )}
         </AtList>
       </View>

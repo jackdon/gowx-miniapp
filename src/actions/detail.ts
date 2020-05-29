@@ -1,12 +1,11 @@
-import Taro from "@tarojs/taro";
 import {
   FETCH_DETAIL,
   FETCH_DETAIL_SUCCESS,
   FETCH_DETAIL_FAIL,
   FETCH_DETAIL_CLEAR,
-
   TOGGLE_EXAMPLE_SHOW_MODE
 } from "../constants/detail";
+import { restExmapleDetail } from "../common/api";
 
 export const clearDetail = () => {
   return {
@@ -37,19 +36,14 @@ export const fetchExampleDetailSuccess = data => {
 export function fetchExampleDetail(id: string) {
   return dispatch => {
     dispatch(fetchExampleDetailStart(id));
-    Taro.request({
-      method: "POST",
-      url: "https://goexa.qiiso.com/example/detail/" + id + "?comment=on"
-    })
-      .then(res => {
-        if (res && res.statusCode == 200 && res.data) {
-          dispatch(fetchExampleDetailSuccess(res.data));
-        }
+    restExmapleDetail({ id, comment: "on" })
+      .then(data => {
+        dispatch(fetchExampleDetailSuccess(data));
       })
       .catch(err => dispatch(fetchExampleDetailFail(err)));
   };
 }
 
 export function changeExampleShowMode(flag: boolean) {
-  return { type: TOGGLE_EXAMPLE_SHOW_MODE, payload: flag }
+  return { type: TOGGLE_EXAMPLE_SHOW_MODE, payload: flag };
 }

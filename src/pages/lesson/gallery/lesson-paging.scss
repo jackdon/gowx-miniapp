@@ -1,0 +1,69 @@
+@import "../../../custom-theme.scss";
+@import "~taro-ui/dist/style/components/icon.scss";
+
+.lesson-paging__container {
+  width: 100%;
+
+  .debug__console {
+    width: 100%;
+    height: 100rpx;
+    background-color: $color-brand-light;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .pagination::-webkit-scrollbar {
+    display: none;
+  }
+  .pagination {
+    width: 100%;
+    background: $color-border-light;
+    display: flex;
+    overflow-x: scroll;
+    position: relative;
+    .pagination__item {
+      flex-basis: auto;
+      max-width: 160rpx;
+      min-width: 15%;
+      border-left: 1px dashed $color-border-light;
+      color: $color-brand-light;
+      .at-icon {
+        color: $color-brand;
+      }
+
+      &.page2first,&.page2last {
+        width: 60rpx;
+        border: none;
+        border-radius: 0;
+        position: sticky;
+        z-index: 1;
+      }
+      &.page2first {
+        left: 0;
+      }
+      &.page2last {
+        right: 0;
+      }
+      &.pagination__item--active {
+        color: $color-brand-dark;
+        font-weight: 900;
+        position: sticky;
+        left: 15%;
+        background: #e2e2ef;
+        z-index: 11;
+      }
+    }
+    .pagination__item:nth-child(1) {
+      border-left: none;
+    }
+    button {
+      border-radius: 0;
+    }
+    button::after {
+      border: none;
+    }
+    button[disabled] {
+      background: $color-brand-dark;
+    }
+  }
+}

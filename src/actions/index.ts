@@ -1,11 +1,10 @@
-import Taro from "@tarojs/taro";
-import qs from "querystring";
 import {
   FETCH_LIST,
   FETCH_LIST_SUCCESS,
   FETCH_LIST_FAIL,
   FETCH_LIST_CLEAR
 } from "../constants/index";
+import { restExamplePage } from "../common/api";
 
 export const clearList = () => {
   return {
@@ -40,16 +39,9 @@ export function fetchExampleList(isFirstLoad: boolean) {
       ? {}
       : store.pageIndex.pagination || {};
     dispatch(fetchExampleListStart(isFirstLoad));
-    Taro.request({
-      method: "GET",
-      url:
-        "https://goexa.qiiso.com/example/page?" +
-        qs.stringify({ page: page + 1, pageSize: perPage })
-    })
-      .then(res => {
-        if (res && res.statusCode == 200 && res.data) {
-          dispatch(fetchExampleListSuccess(res.data));
-        }
+    restExamplePage({ page: page + 1, pageSize: perPage })
+      .then(data => {
+        dispatch(fetchExampleListSuccess(data));
       })
       .catch(err => dispatch(fetchExampleListFail(err)));
   };

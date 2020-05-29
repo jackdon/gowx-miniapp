@@ -55,6 +55,7 @@
   "devDependencies": {
     "@tarojs/mini-runner": "2.2.4",
     "@tarojs/webpack-runner": "2.2.4",
+    "@types/qs": "^6.9.3",
     "@types/react": "^16.4.8",
     "@types/webpack-env": "^1.13.6",
     "@typescript-eslint/eslint-plugin": "^2.13.0",

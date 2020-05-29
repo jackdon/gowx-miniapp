@@ -21,7 +21,8 @@ function fetchSuccess(state, data) {
   return {
     ...state,
     list: [...state.list, ...data.docs],
-    pagination: data.pagination
+    pagination: data.pagination,
+    loading: false,
   }
 }
 
@@ -37,6 +38,7 @@ export default function indexPage(state = INITIAL_STATE, action) {
     case FETCH_LIST_FAIL:
       return {
         ...state,
+        loading: false,
         list: []
       };
     default:

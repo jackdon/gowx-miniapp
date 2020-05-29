@@ -29,7 +29,11 @@ class App extends Component {
       "pages/index/index",
       "pages/example-list/index",
       "pages/example-detail/index",
-      "pages/about/index"
+      "pages/about/index",
+      "pages/about/feedback/index",
+      "pages/lesson/index",
+      "pages/lesson/gallery/index",
+      "pages/components/LessonSection/DebugPage/index",
     ],
     window: {
       backgroundTextStyle: "light",

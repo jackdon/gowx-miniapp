@@ -1,0 +1,44 @@
+@import "../../../custom-theme.scss";
+
+.index {
+  flex-direction: column;
+  width: 100%;
+  background: #fefefe;
+  height: 100vh;
+
+  .gallery_content {
+    width: 100%;
+    height: 100%;
+    .lesson__content {
+      margin-top: 2rem;
+      width: 100%;
+      .lesson__title,.lesson__desc,.lesson__time,.lesson__category {
+        text-align: center;
+        font-weight: 300;
+        margin-top: 1rem;
+        padding: 0 50rpx 0 50rpx;
+      }
+      .lesson__category {
+        text-decoration: underline;
+        color: $color-brand;
+      }
+      .lesson__title {
+        font-weight: 900;
+        font-size: 1.5rem;
+      }
+      .lesson__desc {
+        text-align: left;
+        text-indent: 2rem;
+      }
+    }
+    lesson-paging {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      left: 0;
+    }
+    lesson-section {
+      padding: 0 1rem 4rem 1rem;
+    }
+  }
+}

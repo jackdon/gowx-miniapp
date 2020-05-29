@@ -1,0 +1,72 @@
+@import "../../../custom-theme.scss";
+
+.at_loading {
+  position: fixed;
+  top: 5rem;
+  background: transparent;
+  width: 100%;
+  left: 0;
+  right: 0;
+  height: 64px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 900;
+  .at_loading__dots {
+    width: 20px;
+    height: 20px;
+    background: $color-brand-light;
+    transition: 200ms ease-in-out;
+  }
+  .at_loading__dots:nth-child(1) {
+    animation: loading-dots-1 900ms infinite;
+  }
+  .at_loading__dots:nth-child(2) {
+    animation: loading-dots-2 900ms infinite 300ms;
+  }
+  .at_loading__dots:nth-child(3) {
+    animation: loading-dots-3  900ms infinite 600ms;
+  }
+  .at_loading__dots:nth-child(2) {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+}
+
+$loading-bg-color-1: $color-brand-dark;
+$loading-bg-color-2: #D6F7FE;
+$loading-bg-color-3: #D6F7FE;
+
+@keyframes loading-dots-1 {
+  0% {
+    background: $loading-bg-color-1;
+  }
+  50% {
+    background: $loading-bg-color-2;
+  }
+  100% {
+    background: $loading-bg-color-2;
+  }
+}
+@keyframes loading-dots-2 {
+  0% {
+    background: $loading-bg-color-2;
+  }
+  50% {
+    background: $loading-bg-color-2;
+  }
+  100% {
+    background: $loading-bg-color-1;
+  }
+}
+@keyframes loading-dots-3 {
+  0% {
+    background: $loading-bg-color-2;
+  }
+  50% {
+    background: $loading-bg-color-1;
+  }
+  100% {
+    background: $loading-bg-color-2;
+  }
+}

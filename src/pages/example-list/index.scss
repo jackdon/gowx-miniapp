@@ -8,6 +8,9 @@
     box-sizing: border-box;
     padding: 5%;
   }
+  .at-list::after {
+    border-bottom: none;
+  }
   .at-list__item {
     font-size: 1.2rem;
     color: $color-brand-light ;
@@ -18,6 +21,15 @@
   }
   .dl {
     font-weight: 200;
-    margin-top: 2rem;
+    margin-top: 1.5rem;
+    width: 60%;
+    margin: 0 auto;
+  }
+  .at-divider {
+    /* elements */
+    &__content {
+      color: $color-brand;
+      font-size: $at-divider-font-size;
+    }
   }
 }

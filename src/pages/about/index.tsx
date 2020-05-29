@@ -71,7 +71,25 @@ class Index extends Component {
     };
   }
 
+  onCopyToClipboard = (obj) => {
+    Taro.setClipboardData({
+      data: obj,
+      success: function() {
+        Taro.getClipboardData({
+          success: function() {
+            Taro.showToast({
+              title: "已复制",
+              icon: "none"
+            });
+          }
+        });
+      }
+    });
+  };
+
   render() {
+    const linkMiniapp = "https://github.com/jackdon/gowxapi";
+    const linkAppApi = "https://github.com/jackdon/gowx-miniapp";
     return (
       <View className="index">
         <Image className="gopher" src={gopher}></Image>
@@ -86,8 +104,18 @@ class Index extends Component {
         </View>
 
         <View className="proj">
-          <View className="link">https://github.com/jackdon/gowxapi</View>
-          <View className="link">https://github.com/jackdon/gowx-miniapp</View>
+          <View
+            onClick={this.onCopyToClipboard.bind(this, linkAppApi)}
+            className="link"
+          >
+            {linkAppApi}
+          </View>
+          <View
+            onClick={this.onCopyToClipboard.bind(this, linkMiniapp)}
+            className="link"
+          >
+            {linkMiniapp}
+          </View>
         </View>
       </View>
     );
