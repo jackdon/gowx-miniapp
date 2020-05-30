@@ -90,7 +90,7 @@ export const fetchLessonPagingSuccess = data => {
 };
 
 // 异步的action
-export function fetchLessonPaging(_page?: number) {
+export function fetchLessonPaging(_page?: string) {
   return (dispatch, getState) => {
     const store = getState();
     const { category } = store.lesson.gallery || {};

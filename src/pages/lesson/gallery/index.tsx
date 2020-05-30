@@ -27,7 +27,7 @@ type GalleryStateProps = {
 
 type GalleryDispatchProps = {
   clearList: () => any;
-  fetchList: (page?: number) => any;
+  fetchList: (page?: string) => any;
   onSelectChange: (lesson, selectIndex) => any;
 };
 
@@ -46,7 +46,7 @@ interface Gallery {
     lesson
   }),
   dispatch => ({
-    fetchList(page?: number) {
+    fetchList(page?: string) {
       dispatch(fetchLessonPaging(page));
     },
     onSelectChange(lesson, selectIndex) {
@@ -70,13 +70,13 @@ class Gallery extends Component {
   componentDidMount() {
     const { fetchList } = this.props;
     if (fetchList) {
-      fetchList();
+      fetchList("0");
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  /* componentWillReceiveProps(nextProps) {
     console.log(this.props, nextProps);
-  }
+  } */
 
   componentWillUnmount() {}
 

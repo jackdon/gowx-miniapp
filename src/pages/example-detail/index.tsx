@@ -106,7 +106,7 @@ class Index extends Component {
   render() {
     const { toggleShowMode } = this.props;
     const { data, showMode } = this.props.exampleDetail;
-    const { share, name } = this.$router.params;
+    const { name } = this.$router.params;
     const exampleOptions = [
       {
         title: "注释",
@@ -118,9 +118,7 @@ class Index extends Component {
     ];
     return (
       <View className="page index">
-        {share ? null : (
-          <DocsHeader title="示例代码" desc={name} options={exampleOptions} />
-        )}
+        <DocsHeader title="示例代码" desc={name} options={exampleOptions} />
         {data && (
           <RichText
             nodes={showMode ? data.highlight_code : data.highlight_code_clean}
