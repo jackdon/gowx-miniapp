@@ -34,6 +34,7 @@ class App extends Component {
       "pages/lesson/index",
       "pages/lesson/gallery/index",
       "pages/components/LessonSection/DebugPage/index",
+      "pages/lesson/debug/index",
     ],
     window: {
       backgroundTextStyle: "light",

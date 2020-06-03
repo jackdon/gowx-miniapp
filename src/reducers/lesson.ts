@@ -13,14 +13,13 @@ import {
   FETCH_SECTION_DETAIL,
   FETCH_SECTION_DETAIL_SUCCESS,
   FETCH_SECTION_DETAIL_FAIL,
-
   TOGGLE_RUNNING_CODE_CHANGE,
-
+  TOGGLE_RUNNING_CODE_RESET,
   DEBUG_RUNNING_CODE,
   DEBUG_RUNNING_CODE_SUCCESS,
   DEBUG_RUNNING_CODE_FAIL,
   DEBUG_RUNNING_CODE_END,
-  DEBUG_RUNNING_CODE_CLEAR,
+  DEBUG_RUNNING_CODE_CLEAR
 } from "../constants/lesson";
 
 const INITIAL_STATE = {
@@ -74,7 +73,7 @@ export function gallery(state = GALLERY_INITIAL_STATE, action) {
         ...state,
         loading: true,
         // 切换页，页索引更新为0
-        selectIndex: 0,
+        selectIndex: 0
       };
     case FETCH_LESSON_PAGINE_SUCCESS:
       return fetchGallerySuccess(state, action.payload.data);
@@ -166,7 +165,7 @@ const DEBUG_PAGE_INIT_STATE = {
   runningCode: "",
   runningResult: [],
   runningError: null,
-  runningEnd: null,
+  runningEnd: null
 };
 
 function fetchSectionDetailSuccess(state, data) {
@@ -201,40 +200,48 @@ export function debugPage(state = DEBUG_PAGE_INIT_STATE, action) {
       return {
         ...state,
         runningCode: action.payload
-      }
+      };
+    case TOGGLE_RUNNING_CODE_RESET:
+      return {
+        ...state,
+        runningResult: [],
+        running: false,
+        runningEnd: null,
+        runningCode: action.payload
+      };
     case DEBUG_RUNNING_CODE_CLEAR:
       return {
         ...state,
         runningResult: [],
         running: false,
         runningEnd: null
-      }
+      };
     case DEBUG_RUNNING_CODE:
       return {
         ...state,
         // runningResult: [],
         running: true,
         runningEnd: null
-      }
+      };
     case DEBUG_RUNNING_CODE_SUCCESS:
       return {
         ...state,
         // only `end` or `fail`
         // running: false,
         runningResult: [...state.runningResult, action.payload]
-      }
+      };
     case DEBUG_RUNNING_CODE_FAIL:
       return {
         ...state,
         running: false,
         runningError: action.error
-      }
+      };
     case DEBUG_RUNNING_CODE_END:
       return {
         ...state,
         runningEnd: action.payload,
-        running: false,
-      }
+        running: false
+      };
     default:
       return state;
   }

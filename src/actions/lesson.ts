@@ -18,6 +18,7 @@ import {
   FETCH_SECTION_DETAIL_SUCCESS,
   FETCH_SECTION_DETAIL_FAIL,
   TOGGLE_RUNNING_CODE_CHANGE,
+  TOGGLE_RUNNING_CODE_RESET,
   DEBUG_RUNNING_CODE,
   DEBUG_RUNNING_CODE_SUCCESS,
   DEBUG_RUNNING_CODE_FAIL,
@@ -188,6 +189,13 @@ export function fetchSectionDetail(id: string) {
 export function toggleRunningCodeChange(code) {
   return {
     type: TOGGLE_RUNNING_CODE_CHANGE,
+    payload: code
+  };
+}
+
+export function toggleRunningCodeReset(code) {
+  return {
+    type: TOGGLE_RUNNING_CODE_RESET,
     payload: code
   };
 }

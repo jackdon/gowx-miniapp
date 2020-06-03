@@ -6,7 +6,6 @@ import Taro, { Component, Config } from "@tarojs/taro";
 import { View, RichText, Button, Text } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
 import { AtFloatLayout, AtTextarea } from "taro-ui";
-import qs from "querystring";
 
 import Loading from "../../Loading";
 import SectionPaging from "./SectionPaging";
@@ -107,8 +106,6 @@ class DebugPage extends Component {
     enablePullDownRefresh: false
   };
 
-  state = { isOpened: false };
-
   componentDidMount() {
     const { current } = this.props.debugPage;
     const { loadSectionDetail, onClearConsole } = this.props;
@@ -128,21 +125,11 @@ class DebugPage extends Component {
 
   componentDidHide() {}
 
-  handleOpenExampleDetail = ({ _id, name }) => {
+  handleDebugClicked = (runningCode, e) => {
+    this.$preload({ runningCode })
     Taro.navigateTo({
-      url: `/pages/example-detail/index?${qs.stringify({ name, _id })}`
+      url: `/pages/lesson/debug/index`
     });
-  };
-
-  toggleOpened = () => {
-    this.setState({ isOpened: !this.state.isOpened });
-    if (this.state.isOpened) {
-      this.props.onClearConsole();
-    }
-    const { current } = this.props.debugPage;
-    if (current && current.files && current.files[0]) {
-      this.props.onRunningCodeChange(current.files[0].content);
-    }
   };
 
   onExecClick = () => {
@@ -161,14 +148,9 @@ class DebugPage extends Component {
   };
 
   render() {
-    const { isOpened } = this.state;
     const {
       loading,
       current,
-      running,
-      runningCode,
-      runningResult = [],
-      runningEnd = {}
     } = this.props.debugPage;
     const { list = [] } = this.props.section;
     const canFull = !current || !current.files || current.files.length === 0;
@@ -193,7 +175,7 @@ class DebugPage extends Component {
         {!canFull && (
           <View className="debug-page__debug">
             <Button
-              onClick={this.toggleOpened.bind(this)}
+              onClick={this.handleDebugClicked.bind(this, current ? current.files[0].content : "")}
               className="btn-run"
               disabled={false}
               size="mini"
@@ -206,54 +188,6 @@ class DebugPage extends Component {
         <View className="debug-page__code">
           {current && <RichText nodes={current.files[0].content_hl}></RichText>}
         </View>
-
-        <AtFloatLayout
-          isOpened={isOpened}
-          title="调试代码"
-          onClose={this.toggleOpened.bind(this)}
-        >
-          <View className="debug-page__layout">
-            {running && <Loading loading loadingText="正在加载..." />}
-            <Button
-              onClick={this.onExecClick.bind(this)}
-              className="btn-run exec"
-              disabled={running}
-              size="mini"
-              loading={running}
-            >
-              <Text className="at-fab__icon at-icon at-icon-play"></Text>
-              Go
-            </Button>
-            <AtTextarea
-              maxLength={10000}
-              height="500"
-              onChange={(e: any) => {
-                this.props.onRunningCodeChange(e);
-              }}
-              value={runningCode}
-            ></AtTextarea>
-            <View className="running_result">
-              <Button
-                onClick={this.onClearClick.bind(this)}
-                className="btn-run clear"
-                disabled={false}
-                size="mini"
-              >
-                <Text
-                  className="at-fab__icon at-icon at-icon-close"
-                  style={{ transform: "scale(.8)" }}
-                ></Text>
-                清理
-              </Button>
-              {runningResult.map((r, idx) => {
-                return <View key={`rr_${idx}`} className="running_result--line">{r.Body}</View>;
-              })}
-              {runningEnd && (
-                <View className="running_result--line end">结束</View>
-              )}
-            </View>
-          </View>
-        </AtFloatLayout>
       </View>
     );
   }

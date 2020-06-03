@@ -1,0 +1,55 @@
+@import "../../../../../custom-theme.scss";
+.run-code {
+  .running_code {
+    height: 67vh;
+    .at-textarea {
+      height: 100%;
+      overflow-y: scroll;
+      .at-textarea__counter {
+        position: sticky;
+        bottom: 0;
+      }
+    }
+  }
+  button {
+    color: $color-brand;
+  }
+  button::after {
+    border-radius: 0;
+  }
+  .btn-run {
+    height: 100%;
+    border-radius: 0;
+    color: $color-border-light;
+    text {
+      color: $color-brand-light;
+    }
+  }
+  .btn-run.exec,.btn-run.clear {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 60rpx;
+    z-index: 1000;
+  }
+  .running_result {
+    margin-top: .5rem;
+    padding: 0 18rpx 0 18rpx;
+    background: #282a36;
+    min-height: 33vh;
+    .clear {
+      position: sticky;
+      right: 0;
+      top: 0;
+      float: right;
+      margin-right: -18rpx;
+    }
+  }
+  .running_result--line {
+    background: #282a36;
+    color: $color-brand-light;
+  }
+  .running_result--line.end {
+    color: white;
+  }
+}

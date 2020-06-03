@@ -7,10 +7,11 @@
 		"urlCheck": false,
 		"es6": false,
 		"postcss": false,
-		"minified": false,
+		"minified": true,
 		"newFeature": true,
 		"coverView": true,
 		"autoAudits": false,
+		"showShadowRootInWxmlPanel": true,
 		"checkInvalidKey": true,
 		"checkSiteMap": true,
 		"uploadWithSourceMap": true,
@@ -25,6 +26,6 @@
 	"compileType": "miniprogram",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
-	"libVersion": "2.10.4",
+	"libVersion": "2.11.1",
 	"condition": {}
 }
