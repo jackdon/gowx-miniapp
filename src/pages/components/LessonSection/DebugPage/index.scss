@@ -48,15 +48,6 @@
     left: 0;
     z-index: 11;
   }
-  .at-float-layout__container {
-    max-height: 80%;
-    height: 80%;
-  }
-  .at-float-layout {
-    .at-textarea {
-      border-radius: 0;
-    }
-  }
   .btn-run {
     height: 100%;
     border-radius: 0;
@@ -67,34 +58,6 @@
   }
   button::after {
     border-radius: 0;
-  }
-  .btn-run.exec,.btn-run.clear {
-    position: fixed;
-    // top: 0;
-    right: 18rpx;
-    height: 60rpx;
-    z-index: 1000;
-  }
-
-  .running_result {
-    margin-top: .5rem;
-    padding: 0 18rpx 0 18rpx;
-    background: #282a36;
-    min-height: 30vh;
-    .clear {
-      position: sticky;
-      right: 0;
-      top: 0;
-      float: right;
-      margin-right: -18rpx;
-    }
-  }
-  .running_result--line {
-    background: #282a36;
-    color: $color-brand-light;
-  }
-  .running_result--line.end {
-    color: white;
   }
 }
 

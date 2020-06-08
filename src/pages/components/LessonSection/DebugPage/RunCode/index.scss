@@ -1,7 +1,10 @@
 @import "../../../../../custom-theme.scss";
 .run-code {
+  background: white;
+  opacity: 1;
   .running_code {
-    height: 67vh;
+    height: 60vh;
+    overflow-y: hidden;
     .at-textarea {
       height: 100%;
       overflow-y: scroll;
