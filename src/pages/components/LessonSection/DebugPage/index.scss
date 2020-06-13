@@ -1,7 +1,68 @@
 @import "../../../../custom-theme.scss";
 
 .debug-page__container {
+  .share {
+    width: 100%;
+    display: block;
+    position: fixed;
+    top: 50px;
+    right: 0;
+    left: 0;
+    z-index: 12;
+    .title {
+      height: 80rpx;
+      float: left;
+      line-height: 80rpx;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    &.btn {
+      float: right;
+      margin-right: 50rpx;
+      font-size: .8rem;
+      height: 1.5rem;
+      width: 100rpx;
+      border: 1px solid $color-brand-light;
+      color: $color-brand-light;
+      padding: 5rpx;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .close {
+      width: 80px;
+      height: 80px;
+      float: right;
+      padding: 0;
+      &,at-icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+      }
+      text {
+        color: $color-brand-light;
+      }
+    }
+    .close::after {
+      border: none;
+    }
+    .at-modal__content {
+      padding: 0;
+    }
+    .at-modal__content::-webkit-scrollbar {
+      display: none;
+    }
+    .at-modal__container {
+      width: 80%;
+      height: 80%;
+    }
+  }
   .debug-page__content {
+    width: 100%;
     max-height: 50vh;
     overflow-y: scroll;
     &.full {
@@ -17,8 +78,10 @@
   }
   .debug-page__code {
     position: relative;
-    margin-bottom: 6rem;
+    margin-bottom: 10rem;
     background: white;
+    min-height: 50vh;
+    padding-bottom: 5vh;
     .chroma {
       padding: 1rem;
     }

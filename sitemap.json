@@ -1,0 +1,7 @@
+{
+  "desc": "Go golang 代码示例",
+  "rules": [{
+  "action": "allow",
+  "page": "*"
+  }]
+}

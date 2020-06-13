@@ -3,9 +3,16 @@
 /* eslint-disable react/sort-comp */
 import { ComponentClass } from "react";
 import Taro, { Component, Config } from "@tarojs/taro";
-import { View, RichText, Button, Text } from "@tarojs/components";
+import { View, RichText, Button, Text, Image } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
-import { AtFloatLayout, AtTextarea } from "taro-ui";
+import {
+  AtModal,
+  AtModalAction,
+  AtModalHeader,
+  AtModalContent,
+  AtIcon
+} from "taro-ui";
+import qs from "querystring";
 
 import Loading from "../../Loading";
 import SectionPaging from "./SectionPaging";
@@ -106,6 +113,8 @@ class DebugPage extends Component {
     enablePullDownRefresh: false
   };
 
+  state = { showPost: false, userInfo: {}, imgLoading: true };
+
   componentDidMount() {
     const { current } = this.props.debugPage;
     const { loadSectionDetail, onClearConsole } = this.props;
@@ -126,7 +135,7 @@ class DebugPage extends Component {
   componentDidHide() {}
 
   handleDebugClicked = (runningCode, e) => {
-    this.$preload({ runningCode })
+    this.$preload({ runningCode });
     Taro.navigateTo({
       url: `/pages/lesson/debug/index`
     });
@@ -147,16 +156,74 @@ class DebugPage extends Component {
     }
   };
 
+  handleShareClick = e => {
+    console.log("分享");
+    console.log(e);
+    this.setState({ showPost: true });
+  };
+
+  handleOnGetUserInfo = ({ detail, ...others }) => {
+    console.log(detail);
+    console.log(others);
+    this.setState({ showPost: true, userInfo: detail.userInfo });
+  };
+
   render() {
-    const {
-      loading,
-      current,
-    } = this.props.debugPage;
+    const { showPost, userInfo, imgLoading } = this.state;
+    const { loading, current } = this.props.debugPage;
     const { list = [] } = this.props.section;
     const canFull = !current || !current.files || current.files.length === 0;
+
+    const encodeImgURL = (id = "5ecc74331dc62aabd37273b5") => {
+      const { nickName, avatarUrl } = userInfo as any
+      if (nickName && avatarUrl) {
+        return (
+          `https://goexa.qiiso.com/sandbox/share/page/${id}?` +
+          qs.stringify({ nick: nickName, avatar: avatarUrl })
+        );
+      }
+      return ""
+    };
     return (
       <View className="debug-page__container">
         {loading && <Loading loading={loading} loadingText="正在加载..." />}
+        <View className="share">
+          <Button
+            className="share btn"
+            openType="getUserInfo"
+            onClick={this.handleShareClick.bind(this)}
+            onGetUserInfo={this.handleOnGetUserInfo.bind(this)}
+          >
+            分享
+          </Button>
+          {current && showPost && (
+            <AtModal isOpened={showPost}>
+              <AtModalHeader>
+                <Text className="title">{imgLoading? "正在加载海报..." : "分享"}</Text>
+                <Button
+                  onClick={() =>
+                    this.setState({ ...this.state, showPost: false })
+                  }
+                  className="close"
+                >
+                  <AtIcon value="close" size="20"></AtIcon>
+                </Button>
+              </AtModalHeader>
+              <AtModalContent>
+                {imgLoading && <Loading loading={imgLoading} loadingText="正在加载..." />}
+                <Image
+                  showMenuByLongpress
+                  style={{ width: "100%" }}
+                  mode="widthFix"
+                  onLoad={() => {
+                    this.setState({ imgLoading: false })
+                  }}
+                  src={encodeImgURL(current.id)}
+                ></Image>
+              </AtModalContent>
+            </AtModal>
+          )}
+        </View>
         <View className="pagination">
           <SectionPaging
             current={list.findIndex(s => s.id === current.id)}
@@ -175,7 +242,10 @@ class DebugPage extends Component {
         {!canFull && (
           <View className="debug-page__debug">
             <Button
-              onClick={this.handleDebugClicked.bind(this, current ? current.files[0].content : "")}
+              onClick={this.handleDebugClicked.bind(
+                this,
+                current ? current.files[0].content : ""
+              )}
               className="btn-run"
               disabled={false}
               size="mini"
