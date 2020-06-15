@@ -97,6 +97,9 @@ export function fetchLessonPaging(_page?: string) {
     const { category } = store.lesson.gallery || {};
     const { page = 0, perPage = 15 } = store.lesson.gallery.pagination || {};
     dispatch(fetchLessonPagingStart());
+    if (_page) {
+      dispatch(clearList())
+    }
     restLessonPaging({ category, page: _page || page + 1, pageSize: perPage })
       .then(data => {
         dispatch(fetchLessonPagingSuccess(data));

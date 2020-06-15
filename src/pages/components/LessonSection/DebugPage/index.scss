@@ -20,13 +20,15 @@
     }
     &.btn {
       float: right;
-      margin-right: 50rpx;
-      font-size: .8rem;
-      height: 1.5rem;
+      margin-right: 25rpx;
+      font-size: 1rem;
+      font-weight: 200;
+      height: 2rem;
       width: 100rpx;
       border: 1px solid $color-brand-light;
+      background: white;
       color: $color-brand-light;
-      padding: 5rpx;
+      padding: 10rpx;
       text-align: center;
       display: flex;
       justify-content: center;

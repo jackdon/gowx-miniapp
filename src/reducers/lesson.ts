@@ -131,7 +131,7 @@ const SECTION_INITIAL_STATE = {
 function fetchSectionSuccess(state, data) {
   return {
     ...state,
-    list: [...state.list, ...data.docs],
+    list: [/* ...state.list, */ ...data.docs],
     pagination: data.pagination,
     loading: false
   };
