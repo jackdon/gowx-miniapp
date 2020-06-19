@@ -27,7 +27,7 @@ type GalleryStateProps = {
 
 type GalleryDispatchProps = {
   clearList: () => any;
-  fetchList: (page?: string) => any;
+  fetchList: (category: string, page?: string) => any;
   onSelectChange: (lesson, selectIndex) => any;
 };
 
@@ -46,8 +46,8 @@ interface Gallery {
     lesson
   }),
   dispatch => ({
-    fetchList(page?: string) {
-      dispatch(fetchLessonPaging(page));
+    fetchList(category: string, page?: string) {
+      dispatch(fetchLessonPaging(category, page));
     },
     onSelectChange(lesson, selectIndex) {
       dispatch(changeSelectLesson(selectIndex));
@@ -69,8 +69,9 @@ class Gallery extends Component {
 
   componentDidMount() {
     const { fetchList } = this.props;
+    const { category } = this.$router.params || {}
     if (fetchList) {
-      fetchList("0");
+      fetchList(category, "0");
     }
   }
 
@@ -104,13 +105,27 @@ class Gallery extends Component {
 
   onNextPageClick = () => {
     const { fetchList, lesson } = this.props;
-    fetchList(lesson.gallery.pagination.next);
+    const { category } = this.$router.params || {}
+    if (fetchList) {
+      fetchList(category, lesson.gallery.pagination.next);
+    }
   };
 
   onPrevPageClick = () => {
     const { fetchList, lesson } = this.props;
-    fetchList(lesson.gallery.pagination.prev);
+    const { category } = this.$router.params || {}
+    if (fetchList) {
+      fetchList(category, lesson.gallery.pagination.prev);
+    }
   };
+
+  onPageJumpClick = (page) => {
+    const { fetchList } = this.props;
+    const { category } = this.$router.params || {}
+    if (fetchList) {
+      fetchList(category, page);
+    }
+  }
 
   onLessonClick = (lesson, selectIndex) => {
     // Taro.showToast({title: lesson.title + ":" + selectIndex, icon: "none"})
@@ -149,6 +164,7 @@ class Gallery extends Component {
             onLessonClick={this.onLessonClick}
             onNextPageClick={this.onNextPageClick.bind(this)}
             onPrevPageClick={this.onPrevPageClick.bind(this)}
+            onPageJumpClick={this.onPageJumpClick.bind(this)}
             pagination={{ ...pagination }}
             selectIndex={selectIndex}
             loading={loading}

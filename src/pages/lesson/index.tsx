@@ -80,14 +80,14 @@ class Lesson extends Component {
     });
   };
 
-  handleLessonCardClick = (idx) => {
+  handleLessonCardClick = (idx, s: any) => {
     if (idx === 0) {
       Taro.navigateTo({
         url: `/pages/example-list/index`
       });
     } else {
       Taro.navigateTo({
-        url: `/pages/lesson/gallery/index`
+        url: `/pages/lesson/gallery/index?category=${s.category}`
       });
     }
   }
@@ -100,7 +100,7 @@ class Lesson extends Component {
         <View className="lesson-card__container">
           {list.map((s, idx) => {
             return (
-              <View className="lesson-card" key={`ls_${idx}`} onClick={this.handleLessonCardClick.bind(this, idx)}>
+              <View className="lesson-card" key={`ls_${idx}`} onClick={this.handleLessonCardClick.bind(this, idx, s)}>
                 <View className="at-article__h1">{s.name}</View>
                 <View className="at-article__h3">{s.desc}</View>
                 <View className="at-article__h3"><Text className="label">目录总数</Text>{s.dir_count}</View>

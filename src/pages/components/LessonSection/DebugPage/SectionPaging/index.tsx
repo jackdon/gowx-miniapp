@@ -34,31 +34,37 @@ export default function SectionPaging(props: IProps) {
           <View className="section-paging__current">
             {sections[Math.max(current, 0)].title}
           </View>
-          <View className="pagination">
-            <Button
-              onClick={handlePrevPage.bind(this)}
-              disabled={!hasPrev}
-              className="pagination__item page2first"
-            >
-              <View className="taro-text at-icon at-icon-chevron-left">
-                <Text>
-                  {hasPrev ? sections[current - 1].title : sections[current].title}
-                </Text>
-              </View>
-            </Button>
-            <Button
-              onClick={handleNextPage.bind(this)}
-              disabled={!hasNext}
-              className="pagination__item page2last"
-            >
-              <View>
-                <Text>
-                  {hasNext ? sections[current + 1].title : sections[current].title}
-                </Text>
-                <Text className="taro-text at-icon at-icon-chevron-right"></Text>
-              </View>
-            </Button>
-          </View>
+          {sections && sections.length > 1 && (
+            <View className="pagination">
+              <Button
+                onClick={handlePrevPage.bind(this)}
+                disabled={!hasPrev}
+                className="pagination__item page2first"
+              >
+                <View className="taro-text at-icon at-icon-chevron-left">
+                  <Text>
+                    {hasPrev
+                      ? sections[current - 1].title
+                      : sections[current].title}
+                  </Text>
+                </View>
+              </Button>
+              <Button
+                onClick={handleNextPage.bind(this)}
+                disabled={!hasNext}
+                className="pagination__item page2last"
+              >
+                <View>
+                  <Text>
+                    {hasNext
+                      ? sections[current + 1].title
+                      : sections[current].title}
+                  </Text>
+                  <Text className="taro-text at-icon at-icon-chevron-right"></Text>
+                </View>
+              </Button>
+            </View>
+          )}
         </View>
       )}
     </View>

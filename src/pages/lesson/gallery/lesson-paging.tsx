@@ -2,8 +2,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/sort-comp */
 import { ComponentClass } from "react";
-import Taro, { Component, Config } from "@tarojs/taro";
+import Taro, { Component, Config, useState } from "@tarojs/taro";
 import { View, Text, Button } from "@tarojs/components";
+import { AtInput, AtButton } from "taro-ui";
 // import { connect } from "@tarojs/redux";
 
 import Loading from "../../components/Loading";
@@ -31,6 +32,7 @@ type LessonPagingOwnProps = {
   loading: boolean;
   onNextPageClick: () => void;
   onPrevPageClick: () => void;
+  onPageJumpClick: (page: any) => void;
   onLessonClick: (lesson, selectIndex) => void;
   lessons: any[];
   isDebug?: boolean;
@@ -100,8 +102,10 @@ class LessonPaging extends Component {
       pagination,
       selectIndex = 0,
       lessons = [],
-      isDebug = false
+      isDebug = false,
+      onPageJumpClick
     } = this.props;
+    const [value, setPageValue] = useState(0);
     const {
       page = 0,
       perPage = 10,
@@ -121,6 +125,28 @@ class LessonPaging extends Component {
             <Text>{totalPage}</Text>
             <Text>{prev}</Text>
             <Text>{next}</Text>
+          </View>
+        )}
+        {totalPage > 20 && (
+          <View className="jump-page">
+            <Text>总:{totalPage}</Text>
+            <AtInput
+              customStyle={{ padding: "5rpx 0" }}
+              name="page"
+              type="digit"
+              onChange={(v: number) => {
+                setPageValue(v <= totalPage ? v : 0);
+              }}
+              value={`${value}`}
+            ></AtInput>
+            <AtButton
+              size="small"
+              onClick={() => {
+                onPageJumpClick(value);
+              }}
+            >
+              GO
+            </AtButton>
           </View>
         )}
         <View className="pagination">

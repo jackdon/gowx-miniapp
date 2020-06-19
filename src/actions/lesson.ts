@@ -91,10 +91,9 @@ export const fetchLessonPagingSuccess = data => {
 };
 
 // 异步的action
-export function fetchLessonPaging(_page?: string) {
+export function fetchLessonPaging(category: string, _page?: string) {
   return (dispatch, getState) => {
     const store = getState();
-    const { category } = store.lesson.gallery || {};
     const { page = 0, perPage = 15 } = store.lesson.gallery.pagination || {};
     dispatch(fetchLessonPagingStart());
     if (_page) {

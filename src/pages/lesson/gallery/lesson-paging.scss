@@ -12,6 +12,20 @@
     justify-content: space-between;
   }
 
+  .jump-page {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text {
+      font-weight: 200;
+      color: $color-brand-light;
+      width: 100rpx;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
   .pagination::-webkit-scrollbar {
     display: none;
   }
