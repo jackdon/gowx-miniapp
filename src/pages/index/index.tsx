@@ -1,8 +1,7 @@
-import { ComponentClass } from "react";
-import Taro, { Component, Config } from "@tarojs/taro";
+import { Component } from "react";
+import Taro from "@tarojs/taro";
 import { View, Image, Text } from "@tarojs/components";
 import { AtButton } from "taro-ui";
-import { connect } from "@tarojs/redux";
 
 import gopher from "../../../public/img/gopher_head.png";
 import "./index.scss";
@@ -31,10 +30,6 @@ interface Index {
   props: IProps;
 }
 
-@connect(
-  () => ({}),
-  () => ({})
-)
 class Index extends Component {
   /**
    * 指定config的类型声明为: Taro.Config
@@ -43,9 +38,6 @@ class Index extends Component {
    * 对于像 navigationBarTextStyle: 'black' 这样的推导出的类型是 string
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
-  config: Config = {
-    navigationBarTitleText: "Golang 学习"
-  };
 
   componentWillReceiveProps(nextProps) {
     console.log(this.props, nextProps);
@@ -116,4 +108,4 @@ class Index extends Component {
 //
 // #endregion
 
-export default Index as ComponentClass<PageOwnProps, PageState>;
+export default Index;

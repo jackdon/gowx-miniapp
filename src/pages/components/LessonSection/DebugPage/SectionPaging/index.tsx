@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/sort-comp */
-// import { ComponentClass } from "react";
+// import { Component } from "react";
 import Taro from "@tarojs/taro";
 import { View, Text, Button } from "@tarojs/components";
-// import { connect } from "@tarojs/redux";
+import { connect } from "react-redux";
 
 import "./index.scss";
 

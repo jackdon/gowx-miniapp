@@ -1,4 +1,4 @@
-import Taro, { ComponentClass, Component } from "@tarojs/taro";
+import { Component } from "react";
 import { View } from "@tarojs/components";
 
 import "./index.scss";
@@ -31,4 +31,4 @@ class Loading extends Component {
   }
 }
 
-export default Loading as ComponentClass<LoadingOwnProps, LoadingState>;
+export default Loading;

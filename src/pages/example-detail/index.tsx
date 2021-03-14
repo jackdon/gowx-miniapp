@@ -2,11 +2,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react/sort-comp */
-import { ComponentClass } from "react";
-import Taro, { Component, Config, ShareAppMessageObject } from "@tarojs/taro";
+import { Component } from "react";
+import Taro, { ShareAppMessageObject, getCurrentInstance } from "@tarojs/taro";
 import { View, RichText, Text, Button } from "@tarojs/components";
 import { AtFab } from "taro-ui";
-import { connect } from "@tarojs/redux";
+import { connect } from "react-redux";
 import qs from "querystring";
 
 import {
@@ -71,18 +71,18 @@ class Index extends Component {
    * 对于像 navigationBarTextStyle: 'black' 这样的推导出的类型是 string
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
-  config: Config = {
-    navigationBarTitleText: "Golang 学习",
-    enablePullDownRefresh: false
-  };
+
+  router(): any {
+    return getCurrentInstance().router || {};
+  }
 
   componentDidMount() {
     const { fetchExample } = this.props;
-    const { name, _id } = this.$router.params;
+    const { name, _id } = this.router().params;
     Taro.setNavigationBarTitle({
-      title: this.config.navigationBarTitleText + " - " + name
+      title: "Golang 学习" + " - " + name
     });
-    fetchExample(_id);
+    fetchExample(`${_id}`);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -96,7 +96,7 @@ class Index extends Component {
   // componentDidHide() {}
 
   onShareAppMessage(obj: ShareAppMessageObject) {
-    const { name, _id } = this.$router.params;
+    const { name, _id } = this.router().params;
     return {
       title: "请查收一份代码分享",
       path: "/pages/example-detail/index?" + qs.stringify({ name, _id })
@@ -106,7 +106,7 @@ class Index extends Component {
   render() {
     const { toggleShowMode } = this.props;
     const { data, showMode } = this.props.exampleDetail;
-    const { name } = this.$router.params;
+    const { name } = this.router().params;
     const exampleOptions = [
       {
         title: "注释",
@@ -118,7 +118,7 @@ class Index extends Component {
     ];
     return (
       <View className="page index">
-        <DocsHeader title="示例代码" desc={name} options={exampleOptions} />
+        <DocsHeader title="示例代码" desc={`${name}`} options={exampleOptions} />
         {data && (
           <RichText
             nodes={showMode ? data.highlight_code : data.highlight_code_clean}
@@ -155,4 +155,4 @@ class Index extends Component {
 //
 // #endregion
 
-export default Index as ComponentClass<PageOwnProps, PageState>;
+export default Index;

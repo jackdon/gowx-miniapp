@@ -1,8 +1,8 @@
 /* eslint-disable react/sort-comp */
-import { ComponentClass } from "react";
-import Taro, { Component, Config } from "@tarojs/taro";
+import { Component } from "react";
+import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { View } from "@tarojs/components";
-import { connect } from "@tarojs/redux";
+import { connect } from "react-redux";
 import qs from "querystring";
 
 import Loading from "../../components/Loading";
@@ -27,7 +27,7 @@ type GalleryStateProps = {
 
 type GalleryDispatchProps = {
   clearList: () => any;
-  fetchList: (category: string, page?: string) => any;
+  fetchList: (category: string | undefined, page?: string) => any;
   onSelectChange: (lesson, selectIndex) => any;
 };
 
@@ -39,6 +39,7 @@ type IProps = GalleryStateProps & GalleryDispatchProps & GalleryOwnProps;
 
 interface Gallery {
   props: IProps;
+  // $router: Taro.RouterInfo
 }
 
 @connect(
@@ -62,14 +63,14 @@ class Gallery extends Component {
    * 对于像 navigationBarTextStyle: 'black' 这样的推导出的类型是 string
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
-  config: Config = {
-    navigationBarTitleText: "Golang Code Sandbox",
-    enablePullDownRefresh: false
-  };
+
+  router(): any {
+    return getCurrentInstance().router || {};
+  }
 
   componentDidMount() {
     const { fetchList } = this.props;
-    const { category } = this.$router.params || {}
+    const { category } = this.router().params
     if (fetchList) {
       fetchList(category, "0");
     }
@@ -105,7 +106,7 @@ class Gallery extends Component {
 
   onNextPageClick = () => {
     const { fetchList, lesson } = this.props;
-    const { category } = this.$router.params || {}
+    const { category } = this.router().params;
     if (fetchList) {
       fetchList(category, lesson.gallery.pagination.next);
     }
@@ -113,7 +114,7 @@ class Gallery extends Component {
 
   onPrevPageClick = () => {
     const { fetchList, lesson } = this.props;
-    const { category } = this.$router.params || {}
+    const { category } = this.router().params;
     if (fetchList) {
       fetchList(category, lesson.gallery.pagination.prev);
     }
@@ -121,7 +122,7 @@ class Gallery extends Component {
 
   onPageJumpClick = (page) => {
     const { fetchList } = this.props;
-    const { category } = this.$router.params || {}
+    const { category } = this.router().params;
     if (fetchList) {
       fetchList(category, page);
     }
@@ -153,7 +154,7 @@ class Gallery extends Component {
               {selectLesson.description || ""}
             </View>
             <View className="lesson__time">
-              {(selectLesson.create_time || "").substring(0, 10)}
+              最近更新: {(selectLesson.create_time || "").substring(0, 10)}
             </View>
           </View>
           {selectLesson && (
@@ -182,4 +183,4 @@ class Gallery extends Component {
 //
 // #endregion
 
-export default Gallery as ComponentClass<GalleryOwnProps, GalleryState>;
+export default Gallery;

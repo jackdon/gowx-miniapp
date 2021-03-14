@@ -1,16 +1,16 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/sort-comp */
-import { ComponentClass } from "react";
-import Taro, { Component, Config } from "@tarojs/taro";
+import { Component } from "react";
+import Taro from "@tarojs/taro";
 import { View, RichText, Button, Text, Image } from "@tarojs/components";
-import { connect } from "@tarojs/redux";
+import { connect } from "react-redux";
 import {
   AtModal,
   AtModalAction,
   AtModalHeader,
   AtModalContent,
-  AtIcon
+  AtIcon,
 } from "taro-ui";
 import qs from "querystring";
 
@@ -22,7 +22,7 @@ import {
   fetchSectionDetail,
   toggleRunningCodeChange,
   toggleExecCode,
-  clearDebugConsole
+  clearDebugConsole,
 } from "../../../../actions/lesson";
 
 import "./index.scss";
@@ -59,6 +59,7 @@ type IProps = DebugPageStateProps & DebugPageDispatchProps & DebugPageOwnProps;
 
 interface DebugPage {
   props: IProps;
+  $preload: any;
 }
 
 function addH2Class(html) {
@@ -78,11 +79,11 @@ function withWrapper(html) {
 }
 
 @connect(
-  state => ({
+  (state) => ({
     debugPage: state.lesson.debugPage,
-    section: state.lesson.section
+    section: state.lesson.section,
   }),
-  dispatch => ({
+  (dispatch) => ({
     fetchList(id, isRefresh) {
       dispatch(fetchSectionPaging(id, isRefresh));
     },
@@ -97,7 +98,7 @@ function withWrapper(html) {
     },
     onClearConsole() {
       dispatch(clearDebugConsole());
-    }
+    },
   })
 )
 class DebugPage extends Component {
@@ -108,16 +109,12 @@ class DebugPage extends Component {
    * 对于像 navigationBarTextStyle: 'black' 这样的推导出的类型是 string
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
-  config: Config = {
-    navigationBarTitleText: "Golang Code Sandbox",
-    enablePullDownRefresh: false
-  };
-
   state = { showPost: false, userInfo: {}, imgLoading: true };
 
   componentDidMount() {
     const { current } = this.props.debugPage;
     const { loadSectionDetail, onClearConsole } = this.props;
+    console.log("加载课程详情");
     if (current && current.id) {
       loadSectionDetail(current.id);
     }
@@ -135,9 +132,9 @@ class DebugPage extends Component {
   componentDidHide() {}
 
   handleDebugClicked = (runningCode, e) => {
-    this.$preload({ runningCode });
+    this.props.onRunningCodeChange(runningCode);
     Taro.navigateTo({
-      url: `/pages/lesson/debug/index`
+      url: `/pages/lesson/debug/index`,
     });
   };
 
@@ -149,14 +146,14 @@ class DebugPage extends Component {
     this.props.onClearConsole();
   };
 
-  handlePageChange = curSec => {
+  handlePageChange = (curSec) => {
     const { loadSectionDetail } = this.props;
     if (loadSectionDetail) {
       loadSectionDetail(curSec.id);
     }
   };
 
-  handleShareClick = e => {
+  handleShareClick = (e) => {
     console.log("分享");
     console.log(e);
     this.setState({ showPost: true });
@@ -175,31 +172,33 @@ class DebugPage extends Component {
     const canFull = !current || !current.files || current.files.length === 0;
 
     const encodeImgURL = (id = "5ecc74331dc62aabd37273b5") => {
-      const { nickName, avatarUrl } = userInfo as any
+      const { nickName, avatarUrl } = userInfo as any;
       if (nickName && avatarUrl) {
         return (
           `https://goexa.qiiso.com/sandbox/share/page/${id}?` +
           qs.stringify({ nick: nickName, avatar: avatarUrl })
         );
       }
-      return ""
+      return "";
     };
     return (
       <View className="debug-page__container">
         {loading && <Loading loading={loading} loadingText="正在加载..." />}
         <View className="share">
           <Button
-            className="share btn"
+            className="share btn close"
             openType="getUserInfo"
             onClick={this.handleShareClick.bind(this)}
             onGetUserInfo={this.handleOnGetUserInfo.bind(this)}
           >
-            分享
+            <AtIcon value="share" size="16"></AtIcon>
           </Button>
           {current && showPost && (
             <AtModal isOpened={showPost}>
               <AtModalHeader>
-                <Text className="title">{imgLoading? "正在加载海报..." : "分享"}</Text>
+                <Text className="title">
+                  {imgLoading ? "正在加载海报..." : "分享"}
+                </Text>
                 <Button
                   onClick={() =>
                     this.setState({ ...this.state, showPost: false })
@@ -210,13 +209,15 @@ class DebugPage extends Component {
                 </Button>
               </AtModalHeader>
               <AtModalContent>
-                {imgLoading && <Loading loading={imgLoading} loadingText="正在加载..." />}
+                {imgLoading && (
+                  <Loading loading={imgLoading} loadingText="正在加载..." />
+                )}
                 <Image
                   showMenuByLongpress
                   style={{ width: "100%" }}
                   mode="widthFix"
                   onLoad={() => {
-                    this.setState({ imgLoading: false })
+                    this.setState({ imgLoading: false });
                   }}
                   src={encodeImgURL(current.id)}
                 ></Image>
@@ -224,9 +225,10 @@ class DebugPage extends Component {
             </AtModal>
           )}
         </View>
+
         <View className="pagination">
           <SectionPaging
-            current={list.findIndex(s => s.id === current.id)}
+            current={list.findIndex((s) => s.id === current.id)}
             onPageChange={this.handlePageChange.bind(this)}
             sections={list}
           />
@@ -256,7 +258,9 @@ class DebugPage extends Component {
           </View>
         )}
         <View className="debug-page__code">
-          {current && <RichText nodes={current.files[0].content_hl}></RichText>}
+          {current && current.files && (
+            <RichText nodes={current.files[0].content_hl}></RichText>
+          )}
         </View>
       </View>
     );
@@ -270,4 +274,4 @@ class DebugPage extends Component {
 //
 // #endregion
 
-export default DebugPage as ComponentClass<DebugPageOwnProps, DebugPageState>;
+export default DebugPage;

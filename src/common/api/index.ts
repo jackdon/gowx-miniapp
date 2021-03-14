@@ -1,19 +1,18 @@
-/* eslint-disable import/prefer-default-export */
 import qs from "qs";
 import Taro from "@tarojs/taro";
 
 export const API_ROOT =
   process.env.NODE_ENV === "development"
     ? "http://119.78.163.199:8080"
-    : "https://goexa.qiiso.com";
+    : "https://goexa.xulingming.cn";
 
 export const WS_ROOT =
 process.env.NODE_ENV === "development"
   ? "ws://127.0.0.1:8080"
-  : "wss://goexa.qiiso.com";
+  : "wss://goexa.xulingming.cn";
 
 function isRespOk(res) {
-  return res && res.statusCode == 200 && res.data;
+  return res && res.statusCode === 200 && res.data;
 }
 
 export function restExamplePage({ page, pageSize }) {

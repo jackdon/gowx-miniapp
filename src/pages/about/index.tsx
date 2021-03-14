@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
-import { ComponentClass } from "react";
-import Taro, { Component, Config, ShareAppMessageObject } from "@tarojs/taro";
+import { Component } from "react";
+import Taro, {ShareAppMessageObject } from "@tarojs/taro";
 import { View, Image } from "@tarojs/components";
-import { connect } from "@tarojs/redux";
+import { connect } from "react-redux";
 
 import gopher from "../../../public/img/gopher_head.png";
 import "./index.scss";
@@ -43,10 +43,6 @@ class Index extends Component {
    * 对于像 navigationBarTextStyle: 'black' 这样的推导出的类型是 string
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
-  config: Config = {
-    navigationBarTitleText: "关于"
-  };
-
   componentWillReceiveProps(nextProps) {
     console.log(this.props, nextProps);
   }
@@ -129,4 +125,4 @@ class Index extends Component {
 //
 // #endregion
 
-export default Index as ComponentClass<PageOwnProps, PageState>;
+export default Index;

@@ -1,8 +1,6 @@
-/* eslint-disable react/sort-comp */
-import Taro, { Component, Config } from "@tarojs/taro";
-import { Provider } from "@tarojs/redux";
-
-import Index from "./pages/index";
+import { Component } from "react";
+import Taro from "@tarojs/taro";
+import { Provider } from "react-redux";
 
 import configStore from "./store";
 
@@ -24,27 +22,12 @@ class App extends Component {
    * 对于像 navigationBarTextStyle: 'black' 这样的推导出的类型是 string
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
-  config: Config = {
-    pages: [
-      "pages/index/index",
-      "pages/example-list/index",
-      "pages/example-detail/index",
-      "pages/about/index",
-      "pages/about/feedback/index",
-      "pages/lesson/index",
-      "pages/lesson/gallery/index",
-      "pages/components/LessonSection/DebugPage/index",
-      "pages/lesson/debug/index",
-    ],
-    window: {
-      backgroundTextStyle: "light",
-      navigationBarBackgroundColor: "#7abfde",
-      navigationBarTitleText: "WeChat",
-      navigationBarTextStyle: "black"
-    }
-  };
 
-  // componentDidMount() {}
+  componentDidMount() {
+    Taro.navigateTo({
+      url: "pages/index/index"
+    })
+  }
 
   // componentDidShow() {}
 
@@ -57,10 +40,10 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Index />
+        {this.props.children}
       </Provider>
     );
   }
 }
 
-Taro.render(<App />, document.getElementById("app"));
+export default App;

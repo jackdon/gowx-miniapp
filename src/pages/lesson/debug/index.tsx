@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unused-state */
 /* eslint-disable react/sort-comp */
-import { ComponentClass } from "react";
-import Taro, { Component, Config } from "@tarojs/taro";
+import { Component } from "react";
+import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { View } from "@tarojs/components";
 // import { AtList, AtListItem, AtDivider } from "taro-ui";
 import RunCode from "../../components/LessonSection/DebugPage/RunCode";
@@ -24,6 +24,7 @@ type IProps = DebugStateProps & DebugDispatchProps & DebugOwnProps;
 
 interface Debug {
   props: IProps;
+  // $router: Taro.RouterInfo & { preload: any };
 }
 
 class Debug extends Component {
@@ -34,17 +35,17 @@ class Debug extends Component {
    * 对于像 navigationBarTextStyle: 'black' 这样的推导出的类型是 string
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
-  config: Config = {
-    navigationBarTitleText: "Go代码调试",
-    enablePullDownRefresh: false
-  };
 
   state = { runningCode: "" }
 
+  router(): any {
+    return getCurrentInstance().router || {};
+  }
+
   componentWillMount() {
-    console.log('preload: ', this.$router.preload)
-    if (this.$router.preload) {
-      const { runningCode } = this.$router.preload
+    console.log('preload: ', this.router().preload)
+    if (this.router().preload) {
+      const { runningCode } = this.router().preload
       this.setState({ runningCode })
     }
   }
@@ -53,7 +54,7 @@ class Debug extends Component {
     const { runningCode = "" } = this.state;
     return (
       <View className="index">
-        <RunCode run-code="run-code" runningCode={runningCode} />
+        <RunCode run-code="run-code" runningCode={`${runningCode}`} />
       </View>
     );
   }
@@ -66,4 +67,4 @@ class Debug extends Component {
 //
 // #endregion
 
-export default Debug as ComponentClass<DebugOwnProps, DebugState>;
+export default Debug;

@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
-import { ComponentClass } from "react";
-import Taro, { Component, Config } from "@tarojs/taro";
+import { Component } from "react";
+import Taro from "@tarojs/taro";
 import { View, Label } from "@tarojs/components";
 import { AtTextarea, AtButton } from "taro-ui";
-import { connect } from "@tarojs/redux";
+import { connect } from "react-redux";
 
 import { submitFeedback, toggleContentChange } from "../../../actions/feedback";
 import "./index.scss";
@@ -48,9 +48,6 @@ class Feedback extends Component {
    * 对于像 navigationBarTextStyle: 'black' 这样的推导出的类型是 string
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
-  config: Config = {
-    navigationBarTitleText: "提交反馈"
-  };
 
   componentWillReceiveProps(nextProps) {
     console.log(this.props, nextProps);
@@ -112,4 +109,4 @@ class Feedback extends Component {
 //
 // #endregion
 
-export default Feedback as ComponentClass<FeedbackOwnProps, FeedbackState>;
+export default Feedback;

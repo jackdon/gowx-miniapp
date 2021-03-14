@@ -1,11 +1,10 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/sort-comp */
-import { ComponentClass } from "react";
-import Taro, { Component, Config, useState } from "@tarojs/taro";
+import { Component } from "react";
+import Taro from "@tarojs/taro";
 import { View, Text, Button } from "@tarojs/components";
 import { AtInput, AtButton } from "taro-ui";
-// import { connect } from "@tarojs/redux";
 
 import Loading from "../../components/Loading";
 // import { fetchSandboxList } from "../../../actions/lesson";
@@ -45,7 +44,7 @@ type IProps = LessonPagingStateProps &
   LessonPagingOwnProps;
 
 interface LessonPaging {
-  props: IProps;
+  props: IProps | any;
 }
 
 /* @connect(
@@ -59,11 +58,8 @@ interface LessonPaging {
   })
 ) */
 class LessonPaging extends Component {
-  config: Config = {
-    navigationBarTitleText: "Golang Code Sandbox",
-    enablePullDownRefresh: false
-  };
 
+  state = { value: 0};
   componentDidMount() {}
 
   componentWillReceiveProps(nextProps) {
@@ -96,6 +92,10 @@ class LessonPaging extends Component {
     this.props.onNextPageClick();
   };
 
+  setPageValue(val) {
+    this.setState({value: val});
+  }
+
   render() {
     const {
       loading,
@@ -105,7 +105,7 @@ class LessonPaging extends Component {
       isDebug = false,
       onPageJumpClick
     } = this.props;
-    const [value, setPageValue] = useState(0);
+    const { value } = this.state;
     const {
       page = 0,
       perPage = 10,
@@ -135,7 +135,7 @@ class LessonPaging extends Component {
               name="page"
               type="digit"
               onChange={(v: number) => {
-                setPageValue(v <= totalPage ? v : 0);
+                this.setPageValue(v <= totalPage ? v : 0);
               }}
               value={`${value}`}
             ></AtInput>
@@ -190,7 +190,4 @@ class LessonPaging extends Component {
 //
 // #endregion
 
-export default LessonPaging as ComponentClass<
-  LessonPagingOwnProps,
-  LessonPagingState
->;
+export default LessonPaging;

@@ -1,6 +1,6 @@
-import Taro, { ComponentClass, Component } from "@tarojs/taro";
+import { Component } from "react";
 import { View } from "@tarojs/components";
-import { connect } from "@tarojs/redux";
+import { connect } from "react-redux";
 import { AtSwitch } from "taro-ui";
 
 import "./index.scss";
@@ -49,4 +49,4 @@ class DocsHeader extends Component {
   }
 }
 
-export default DocsHeader as ComponentClass<PageOwnProps, PageState>;
+export default DocsHeader;

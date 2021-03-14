@@ -1,6 +1,6 @@
-import Taro, { Component, ComponentClass } from "@tarojs/taro";
+import { Component } from "react";
 import { View, Button, Text } from "@tarojs/components";
-import { connect } from "@tarojs/redux";
+import { connect } from "react-redux";
 import { AtTextarea } from "taro-ui";
 import Loading from "../../../../components/Loading";
 
@@ -12,7 +12,7 @@ import {
 } from "../../../../../actions/lesson";
 
 type RunCodeStateProps = {
-  debugPage: {
+  debugPage?: {
     loading: boolean;
     current: { id: string; title: string; content: string; files: any[] };
     sections: any[];
@@ -21,7 +21,7 @@ type RunCodeStateProps = {
     runningEnd: any;
     running: boolean;
   };
-  section: {
+  section?: {
     list: any[];
   };
 };
@@ -42,7 +42,7 @@ type RunCodeOwnProps = {
 
 type RunCodeState = {};
 
-type IProps = RunCodeStateProps & RunCodeDispatchProps & RunCodeOwnProps;
+type IProps = RunCodeStateProps & RunCodeOwnProps | any;
 
 interface RunCode {
   props: IProps;
@@ -98,7 +98,7 @@ class RunCode extends Component {
       runningCode,
       runningEnd,
       runningResult
-    } = this.props.debugPage;
+    } = this.props.debugPage || {};
     return (
       <View className="run-code">
         {running && <Loading loading loadingText="正在加载..." />}
@@ -120,7 +120,7 @@ class RunCode extends Component {
             onChange={(e: any) => {
               this.props.onRunningCodeChange(e);
             }}
-            value={runningCode}
+            value={`${runningCode}`}
           ></AtTextarea>
         </View>
         <View className="running_result">
@@ -150,4 +150,4 @@ class RunCode extends Component {
   }
 }
 
-export default RunCode as ComponentClass<RunCodeOwnProps, RunCodeState>;
+export default RunCode;

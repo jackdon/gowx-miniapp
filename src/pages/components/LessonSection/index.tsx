@@ -1,17 +1,16 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/sort-comp */
-import { ComponentClass } from "react";
-import Taro, { Component, Config } from "@tarojs/taro";
+import { Component } from "react";
+import Taro from "@tarojs/taro";
 import { View, Text } from "@tarojs/components";
 import { AtList, AtListItem } from "taro-ui";
-import { connect } from "@tarojs/redux";
-import qs from "querystring";
+import { connect } from "react-redux";
 
 import Loading from "../Loading";
 import {
   fetchSectionPaging,
-  toggleDebugPageInit
+  toggleDebugPageInit,
 } from "../../../actions/lesson";
 
 import "./index.scss";
@@ -51,20 +50,20 @@ type IProps = LessonSectionStateProps &
   LessonSectionOwnProps;
 
 interface LessonSection {
-  props: IProps;
+  props: IProps | any;
 }
 
 @connect(
-  state => ({
-    section: state.lesson.section
+  (state) => ({
+    section: state.lesson.section,
   }),
-  dispatch => ({
+  (dispatch) => ({
     fetchList(id, isRefresh) {
       dispatch(fetchSectionPaging(id, isRefresh));
     },
     toggleDebugPageInit(args) {
       dispatch(toggleDebugPageInit(args));
-    }
+    },
   })
 )
 class LessonSection extends Component {
@@ -75,10 +74,6 @@ class LessonSection extends Component {
    * 对于像 navigationBarTextStyle: 'black' 这样的推导出的类型是 string
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
-  config: Config = {
-    navigationBarTitleText: "Golang Code Sandbox",
-    enablePullDownRefresh: false
-  };
 
   componentDidMount() {
     const { lessonId, fetchList, onlyList } = this.props;
@@ -100,10 +95,10 @@ class LessonSection extends Component {
   componentDidHide() {}
 
   onSectionClick = (sections, current, e) => {
-    // eslint-disable-next-line taro/this-props-function
-    this.props.toggleDebugPageInit({ sections, current });
+    this.props.toggleDebugPageInit({ cb: () => {}, sections, current });
+    console.log("打开调试页面", current);
     Taro.navigateTo({
-      url: `/pages/components/LessonSection/DebugPage/index`
+      url: `/pages/components/LessonSection/DebugPage/index`,
     });
   };
 
@@ -145,7 +140,4 @@ class LessonSection extends Component {
 //
 // #endregion
 
-export default LessonSection as ComponentClass<
-  LessonSectionOwnProps,
-  LessonSectionState
->;
+export default LessonSection;

@@ -1,9 +1,9 @@
 /* eslint-disable react/sort-comp */
-import { ComponentClass } from "react";
-import Taro, { Component, Config } from "@tarojs/taro";
+import { Component } from "react";
+import Taro from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import { AtList, AtListItem, AtDivider } from "taro-ui";
-import { connect } from "@tarojs/redux";
+import { connect } from "react-redux";
 import qs from "querystring";
 
 import Loading from "../components/Loading";
@@ -66,10 +66,6 @@ class Index extends Component {
    * 对于像 navigationBarTextStyle: 'black' 这样的推导出的类型是 string
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
-  config: Config = {
-    navigationBarTitleText: "Golang 学习",
-    enablePullDownRefresh: false
-  };
 
   componentDidMount() {
     const { fetchList } = this.props;
@@ -131,4 +127,4 @@ class Index extends Component {
 //
 // #endregion
 
-export default Index as ComponentClass<PageOwnProps, PageState>;
+export default Index;
